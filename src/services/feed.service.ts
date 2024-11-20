@@ -7,6 +7,8 @@ import moment from 'moment';
 class FeedService {
 
   async getFeedByArticle(articleId: string) {
+
+    //antes de buscar o en algun momento hay que hacer el caluclo de los totales
     const feed: any =  feedRepository.getFeedByArticle(articleId);
     if (!feed) {
       throw new CustomError('No se han encontrado Feeds para el artículo '+articleId, 404);
