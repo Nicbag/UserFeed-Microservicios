@@ -76,7 +76,6 @@ updateDate
 **Consulta de feed de un artículo**
 `GET /v1/feedService/feed/{articleId}` 
 
-Reestructurar, lista de User_Feed, sin embargo dejar uno que busque el feed solo
 
 *Headers*
 Authorization: Bearer token

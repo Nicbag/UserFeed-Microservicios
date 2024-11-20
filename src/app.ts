@@ -61,7 +61,7 @@ if (config.NODE_ENV !== 'production') {
 DatabaseConnection.getInstance();
 
 // API routes prefix
-app.use('/api/v1', router);
+app.use('/api/v1/feedService', router);
 
 app.use(
   errorLogger({
