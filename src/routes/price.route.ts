@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import priceService from '@services/price.service';
-import { RequestCreatePrice, RequestGetDeletePrice, RequestUpdatePrice } from '@dtos/prices.dto';
+import { RequestCreateFeed , RequestUpdateFeed } from '@dtos/feed.dto';
 import { authMiddleware } from '@middlewares/auth.middleware';
 
 class PriceRoute {
@@ -11,18 +11,18 @@ class PriceRoute {
   }
 
   createRoutes(): void {
-    this.router.post('/prices', authMiddleware, this.createUpdatePrice.bind(this));
-    this.router.get('/prices/:article_id', authMiddleware, this.getPrice.bind(this));
+    this.router.post('/prices', authMiddleware, this.createUpdateFeed.bind(this));
+    // this.router.get('/prices/:article_id', authMiddleware, this.getPrice.bind(this));
   }
 
-  private createUpdatePrice(req: Request, res: Response, next: NextFunction) {
-    const { body } = req as RequestCreatePrice;
+  private createUpdateFeed(req: Request, res: Response, next: NextFunction) {
+    const { body } = req as RequestCreateFeed;
     priceService
       .createUpdatePrice(body)
       .then((response) => res.json(response))
       .catch((err) => next(err));
   }
-
+/*
   private getPrice(req: Request, res: Response, next: NextFunction) {
     const {
       params: { article_id },
@@ -32,6 +32,7 @@ class PriceRoute {
       .then((response) => res.json(response))
       .catch((err) => next(err));
   }
+      */
 }
 
 export default new PriceRoute().router;

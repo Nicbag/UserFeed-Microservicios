@@ -4,7 +4,7 @@ import { FeedDocument } from './entities/feed';
 export const FeedSchema = new Schema(
   {
     article_id: {
-      type: Number,
+      type: String,
       required: true,
     },
     total_stars: {

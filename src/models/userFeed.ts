@@ -4,11 +4,11 @@ import { UserFeedDocument } from './entities/userFeed';
 export const UserFeedSchema = new Schema(
   {
     feed_id: {
-      type: Number,
+      type: String,
       required: true,
     },
     article_id: {
-        type: Number,
+        type: String,
         required: true,
     },
     creation_user: {
@@ -33,7 +33,7 @@ export const UserFeedSchema = new Schema(
     },
   },
   {
-    collection: 'feeds',
+    collection: 'userFeeds',
     timestamps: true, 
   }
 );

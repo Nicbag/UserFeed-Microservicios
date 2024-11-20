@@ -1,7 +1,7 @@
 import { CustomError } from '@config/errors/error.model';
 import { Price } from '@models/entities/feed';
-import priceRepository from '@repositories/price.repository';
-import { UpdatePrice } from '@dtos/prices.dto';
+import priceRepository from '@repositories/feed.repository';
+import { UpdatePrice } from '@dtos/feed.dto';
 import discountService from './discount.service';
 import { Rabbit } from 'src/rabbitmq/rabbit.server';
 import moment from 'moment';
