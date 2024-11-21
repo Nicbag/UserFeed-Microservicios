@@ -12,7 +12,15 @@ class UserFeedService {
       throw new CustomError('No se han encontrado reseñas para el artículo '+articleId, 404);
     }
     return { ...userFeeds._doc};
+  }
+
+  async getUserFeedByUserIdPending(user_id: string) {
+    const userFeeds: any =  userFeedRepository.getUserFeedByUserIdPending(user_id);
+    if (!userFeeds) {
+      throw new CustomError('No se han encontrado reseñas pendientes para el usuario '+user_id, 404);
     }
+    return { ...userFeeds._doc};
+  }
 
 }
 

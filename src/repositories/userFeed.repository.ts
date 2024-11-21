@@ -10,6 +10,14 @@ class FeedRepository {
     });
   }
 
+  async getUserFeedByUserIdPending(user_id: string) {
+    
+    return ModelUserFeed.find({
+      creation_user: user_id,
+      stars: { equals: null }
+    });
+  }
+
   async create(payload: UserFeed) {
     return ModelUserFeed.create(payload);
   }

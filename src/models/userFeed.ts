@@ -12,7 +12,7 @@ export const UserFeedSchema = new Schema(
         required: true,
     },
     creation_user: {
-        type: Number,
+        type: String,
         required: true,
     },
     stars: {
