@@ -6,18 +6,18 @@
 - Precondicion: El artículo ya fue comprado por el usuario 
 - Camino normal:
 	- Al reseñar un artículo, el servicio de User Feed recibe un mensaje. En la validación de la puntuación, el puntaje quedará dentro de los mínimos(1) y máximos(5) y el mismo es un número entero y no es opcional
-    -Al reseñar un artículo también se puede agregar un comentario, el mismo es opcional
+    - Al reseñar un artículo también se puede agregar un comentario, el mismo es opcional
 	- Buscar el user_feed del usuario para ese artículo y colocar puntuación realizada y comentario si se agregó
 - Caminos alternativos:
 	- Si la puntuación no está dentro del mínimo y máximo, largar excepción controlada.
-    -Si la puntuación contiene decimales, truncar para que quede un entero
-    -Si no coloca puntuación largar excepción controlada
-    -Si no existe el user_feed largar excepción controlada porque el artículo no fue comprado
+    - Si la puntuación contiene decimales, truncar para que quede un entero
+    - Si no coloca puntuación largar excepción controlada
+    - Si no existe el user_feed largar excepción controlada porque el artículo no fue comprado
 
 #### CU: Consultar reseñas(user_feed) de un artículo
 - Precondicion: El artículo ya ha sido comentado por algún usuario
 - Camino normal:
-	- Al ingresar en un articulo, además de visualizar la información del mismo se debe poder visualizar todos los comentarios que se le han realizado al mismo junto con la puntuación promedio del artículo
+	- Al ingresar en un articulo, además de visualizar la información del mismo se debe poder visualizar todos los comentarios que se le han realizado al mismo junto con la puntuación 
 #### CU: Calcular totales de puntuación de un artículo y cantidad de comentarios
 - Precondicion: El artículo es reseñado  por algún usuario
 - Camino normal:

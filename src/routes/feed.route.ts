@@ -21,7 +21,7 @@ class FeedRoute {
 
     if (!article_id) {
       return res.status(400).json({ error: "El id del artículo es obligatorio" });
-  }
+    }
     feedService
       .getFeedByArticle(article_id)
       .then((response) => res.json(response))

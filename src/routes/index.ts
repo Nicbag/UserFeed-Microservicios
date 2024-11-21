@@ -1,10 +1,11 @@
 import { Router } from 'express';
 import testRoute from './test.route';
-import priceRoute from './feed.route';
+import userFeedRoute from './userFeed.route';
+import feedRoute from './feed.route';
 
 const router = Router();
 
-router.use(testRoute);
-router.use(priceRoute);
+router.use(feedRoute);
+router.use(userFeedRoute);
 
 export default router;
