@@ -119,7 +119,7 @@ Authorization: Bearer token
 ```
 
 **Consulta de user_feed sin reseñar del id del usuario logeado**
-`GET /v1/feedService/user_feed/{userId}` 
+`GET /v1/feedService/user_feed/` 
 
 *Headers*
 Authorization: Bearer token
@@ -177,9 +177,9 @@ Authorization: Bearer token
 
 ### *Interfaz asincronica (rabbit)*
 
-**Calculo de totales de puntuación y cantidad de comentarios de un artículo**
+**Creaciones de userFeed y/o Feed**
 - Escuchar el servicio de order para crear los user_Feed y después se edita con la putuacion y comentario. En caso de que sea la priumera compra tambien crea el Feed de ese articulo
-- Recibe para hacer el caluclo `feed-total`
+- Recibe para hacer el flujo `userFeed-create`
 
 ```json
 {
@@ -189,19 +189,20 @@ Authorization: Bearer token
 }
 ```
 *response*
--Responde con el resultado de los totales en feed en fanout `feed-totals-calculated`
+-Responde con el resultado de las creaciones en feed en fanout `userFeed-create`
 ```json
 {
     "id": 91218,
+    "feedId":23432,
     "articleId": 91218,
-    "creationUser":1234,
-    "totalStars": 75,
-    "reviewQuantity":12,
+    "creationUser":912,
+    "stars": null,
+    "review":null,
     "creationDate": 165947859374
 }
 ```
 
-#### Flujo de Trabajo para Cálculo de Totales de Puntuación y Comentarios
+#### Flujo de Trabajo para Creaciones de userFeed y/o Feed
 
 1. **Detección de Compra en `orderService`**
    - El `orderService` detecta que un usuario ha realizado una compra y envía un mensaje al `feedService` a través de la cola `feed-total`.
@@ -215,10 +216,7 @@ Authorization: Bearer token
 
 4. **Cálculo de Totales en `feedService`**
    - El `feedService` calcula los totales relacionados al artículo:
-     - `totalStars`: La puntuación acumulada de todos los comentarios sobre el artículo.
-     - `reviewQuantity`: La cantidad total de registros `userFeed` asociados al artículo, que representan la cantidad de comentarios o compras.
+     - `totalStars`: La puntuación acumulada de todos los userFeed sobre el artículo.
+     - `reviewQuantity`: La cantidad total de registros `userFeed` asociados al artículo, que representan la cantidad de reseñas REALIZADAS.
 
-5. **Envío de Respuesta con Totales Calculados**
-   - El `feedService` envía un mensaje en el exchange `feed-totals-calculated`, el cual contiene el resultado del cálculo de los totales de puntuación y cantidad de comentarios.
-   - Este mensaje está disponible para cualquier servicio que necesite la información.
 

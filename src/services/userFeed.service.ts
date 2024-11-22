@@ -8,7 +8,7 @@ class UserFeedService {
 
   async getUserFeedByArticle(articleId: string) {
     const userFeeds: any =  userFeedRepository.getUserFeedByArticle(articleId);
-    if (!userFeeds) {
+    if (!userFeeds || Object.keys(userFeeds).length === 0) {
       throw new CustomError('No se han encontrado reseñas para el artículo '+articleId, 404);
     }
     return { ...userFeeds._doc};
@@ -16,7 +16,7 @@ class UserFeedService {
 
   async getUserFeedByUserIdPending(user_id: string) {
     const userFeeds: any =  userFeedRepository.getUserFeedByUserIdPending(user_id);
-    if (!userFeeds) {
+    if (!userFeeds || Object.keys(userFeeds).length === 0) {
       throw new CustomError('No se han encontrado reseñas pendientes para el usuario '+user_id, 404);
     }
     return { ...userFeeds._doc};

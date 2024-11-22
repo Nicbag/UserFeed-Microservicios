@@ -12,7 +12,7 @@ class UserFeedRoute {
 
   createRoutes(): void {
     this.router.get('/user_feed/:article_id', authMiddleware, this.getUserFeed.bind(this));
-    this.router.get('/user_feed/:user_id', authMiddleware, this.getUserFeedPending.bind(this));
+    this.router.get('/user_feed/', authMiddleware, this.getUserFeedPending.bind(this));
   }
 
   private getUserFeed(req: Request, res: Response, next: NextFunction) {
@@ -29,14 +29,11 @@ class UserFeedRoute {
       .catch((err) => next(err));
   }
   
-  private getUserFeedPending(req: Request, res: Response, next: NextFunction) {
-    const {
-      params: { user_id },
-    } = req
 
-    if (!user_id) {
-      return res.status(400).json({ error: "El id del usuario es obligatorio" });
-    } 
+  private getUserFeedPending(req: Request, res: Response, next: NextFunction) {
+    console.log(req.user);
+    const user_id = req.user.id;
+
     userFeedService
       .getUserFeedByUserIdPending(user_id)
       .then((response) => res.json(response))
