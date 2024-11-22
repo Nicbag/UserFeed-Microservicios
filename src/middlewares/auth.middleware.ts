@@ -19,6 +19,7 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
     });
 
     if (authResponse.status === 200) {
+      req.user = authResponse.data
       next();
     } else {
       res.status(401).json({ message: 'Unauthorized' });
@@ -27,3 +28,12 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
     res.status(401).json({ message: 'Unauthorized' });
   }
 };
+
+//en la linea 22 antes de llamar a next en authresponse yo voy a tener el contenido, este parseado, hago req.user 
+declare global {
+  namespace Express {
+    interface Request {
+      user?: any;
+    }
+  }
+}

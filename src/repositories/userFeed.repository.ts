@@ -14,7 +14,7 @@ class FeedRepository {
     
     return ModelUserFeed.find({
       creation_user: user_id,
-      stars: { equals: null }
+      stars: { $eq: null }
     });
   }
 

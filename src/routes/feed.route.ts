@@ -11,7 +11,7 @@ class FeedRoute {
   }
 
   createRoutes(): void {
-    this.router.get('/feed/:article_id', authMiddleware, this.getFeed.bind(this));
+    this.router.get('/feed/:article_id',authMiddleware, this.getFeed.bind(this));
   }
 
   private getFeed(req: Request, res: Response, next: NextFunction) {
