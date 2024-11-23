@@ -1,9 +1,8 @@
-import { Feed } from '@models/entities/feed';
+import { Feed, FeedDocument } from '@models/entities/feed';
 import ModelFeed from '@models/feed';
-import { UpdateFeed } from '@dtos/feed.dto';
 
 class FeedRepository {
-  async getFeedByArticle(articleId: string) {
+  async getFeedByArticle(articleId: string): Promise<FeedDocument| null> {
     return ModelFeed.findOne({
       article_id: articleId
     });
@@ -11,10 +10,6 @@ class FeedRepository {
 
   async create(payload: Feed) {
     return ModelFeed.create(payload);
-  }
-
-  async updateById(id: any, payload: UpdateFeed) {
-    return ModelFeed.updateOne({ _id: id }, payload, { new: true });
   }
 
 }

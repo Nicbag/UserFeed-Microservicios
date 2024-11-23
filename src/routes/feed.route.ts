@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import feedService from '@services/feed.service';
-import { RequestCreateFeed , RequestUpdateFeed } from '@dtos/feed.dto';
+import { RequestCreateFeed } from '@dtos/feed.dto';
 import { authMiddleware } from '@middlewares/auth.middleware';
 
 class FeedRoute {
