@@ -1,15 +1,20 @@
 import { Feed } from '@models/entities/feed';
+import { UserFeed } from '@models/entities/userFeed';
 import { Request } from 'express';
 
 export interface RequestCreateFeed extends Request {
   body: Feed;
 }
 
-export interface RequestUpdateFeed extends Request {
+export interface RequestUpdateUserFeed extends Request {
   params: {
     article_id: string;
   };
-  body: UpdateFeed;
+  body: UpdateUserFeed;
 }
 
-export interface UpdateFeed extends Partial<Omit<Feed, 'article_id'>> {}
+export interface UpdateUserFeed {
+  star?: number;  
+  review?: string; 
+}
+
