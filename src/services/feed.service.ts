@@ -10,7 +10,7 @@ class FeedService {
   async getFeedByArticle(articleId: string) {
 
     calculoTotalesService.calcularTotalesFeed(articleId);
-    const feed: any =  feedRepository.getFeedByArticle(articleId);
+    const feed: any = await feedRepository.getFeedByArticle(articleId);
     if (!feed || Object.keys(feed).length === 0) {
       throw new CustomError('No se han encontrado Feeds para el artículo '+articleId, 404);
     }

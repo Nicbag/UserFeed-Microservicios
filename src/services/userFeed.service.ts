@@ -8,7 +8,7 @@ import { Rabbit } from 'src/rabbitmq/rabbit.server';
 class UserFeedService {
 
   async getUserFeedByArticle(articleId: string) {
-    const userFeeds: any =  userFeedRepository.getUserFeedByArticle(articleId);
+    const userFeeds: any = await userFeedRepository.getUserFeedByArticle(articleId);
     if (!userFeeds || Object.keys(userFeeds).length === 0) {
       throw new CustomError('No se han encontrado reseñas para el artículo '+articleId, 404);
     }
@@ -16,7 +16,7 @@ class UserFeedService {
   }
 
   async getUserFeedByUserIdPending(user_id: string) {
-    const userFeeds: any =  userFeedRepository.getUserFeedByUserIdPending(user_id);
+    const userFeeds: any =  await userFeedRepository.getUserFeedByUserIdPending(user_id);
     if (!userFeeds || Object.keys(userFeeds).length === 0) {
       throw new CustomError('No se han encontrado reseñas pendientes para el usuario '+user_id, 404);
     }
