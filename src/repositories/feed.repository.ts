@@ -8,7 +8,7 @@ class FeedRepository {
     });
   }
 
-  async create(payload: Feed) {
+  async create(payload: Feed): Promise<FeedDocument | null> {
     return ModelFeed.create(payload);
   }
 
