@@ -2,7 +2,7 @@ import { CustomError } from '@config/errors/error.model';
 import { UserFeedDocument } from '@models/entities/userFeed';
 import userFeedRepository from '@repositories/userFeed.repository';
 import { UpdateUserFeed } from '@dtos/feed.dto';
-import calculoTotalesService from './calculoTotales.service';
+import calculoTotalesService from './feedAndUserFeed.service';
 import { Rabbit } from 'src/rabbitmq/rabbit.server';
 
 class UserFeedService {
@@ -16,11 +16,11 @@ class UserFeedService {
   }
 
   async getUserFeedByUserIdPending(user_id: string) {
-    const userFeeds: any =  await userFeedRepository.getUserFeedByUserIdPending(user_id);
+    const userFeeds: UserFeedDocument[] =  await userFeedRepository.getUserFeedByUserIdPending(user_id);
     if (!userFeeds || Object.keys(userFeeds).length === 0) {
       throw new CustomError('No se han encontrado reseñas pendientes para el usuario '+user_id, 404);
     }
-    return { ...userFeeds._doc};
+    return { ...userFeeds};
   }
 
   async reviewArticle(userFeedReseñado: UpdateUserFeed, article_id: string,user_id: string) {
@@ -46,7 +46,7 @@ class UserFeedService {
     // Guardar los cambios en la base de datos
     const updatedUserFeed = await userFeed.save();
 
-    calculoTotalesService.calcularTotalesFeed(article_id);
+    calculoTotalesService.calculateTotalsFeed(article_id);
 
     // Retornar el objeto actualizado
     return { ...updatedUserFeed };

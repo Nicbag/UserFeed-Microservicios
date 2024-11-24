@@ -18,3 +18,13 @@ export interface UpdateUserFeed {
   review?: string; 
 }
 
+export interface OrderMessage {
+  user_id: string;
+  articles: Article[];
+}
+
+export interface Article {
+  article_id: string;
+  quantity: number;
+}
+

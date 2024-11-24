@@ -1,12 +1,14 @@
 import amqp, { Channel, Connection } from 'amqplib';
 import config from '@config/index';
 import logger from '@utils/logger';
+import feedAndUserFeedService from '@services/feedAndUserFeed.service';
+import { OrderMessage } from '@dtos/feed.dto';
 import { CustomError } from '@config/errors/error.model';
 
 export class Rabbit {
   private static instance: Rabbit;
   private connection: Connection | null = null;
-  private trainingChannel: Channel | null = null;
+  private orderChannel: Channel | null = null;
 
   private constructor() {
     this.connect();
@@ -36,20 +38,41 @@ export class Rabbit {
     if (!this.connection) {
       throw new CustomError('Rabbit connection failed',500);
     }
-    this.trainingChannel = await this.connection.createChannel();
-    await this.trainingChannel.assertQueue(config.QUEUE_STATS);
+    this.orderChannel = await this.connection.createChannel();
+    await this.orderChannel.assertQueue(config.QUEUE_ORDERS); // cola para recibir las órdenes que se crean
+    this.orderChannel.consume(config.QUEUE_ORDERS, this.handleOrderPlaced.bind(this),{noAck: true})
+  
   }
 
-  public async sendMessage(message: any, queue = config.QUEUE_STATS): Promise<void> {
-    if (!this.trainingChannel) {
-      throw new CustomError('Rabbit connection failed',500);
-    }
-    try {
-      const messageBuffer = Buffer.from(JSON.stringify(message));
-      await this.trainingChannel.sendToQueue(queue, messageBuffer);
-      logger.info(`--> Message sent to queue ${queue}`);
-    } catch (err) {
-      logger.error(`Error sending message to RabbitMQ: ${err}`);
+  private async  handleOrderPlaced(msg : amqp.ConsumeMessage | null){
+    if(!msg) return;
+
+        try {
+      // Deserializa el mensaje recibido (asumiendo que el mensaje es JSON)
+      const orderData : OrderMessage = JSON.parse(msg.content.toString());
+
+      //se valida el mensaje
+      if (
+        typeof orderData.user_id !== 'string' ||
+        !Array.isArray(orderData.articles) ||
+        orderData.articles.some(
+          (article: any) =>
+            typeof article.article_id !== 'string' ||
+            typeof article.quantity !== 'number' ||
+            article.cantidad <= 0
+        )
+      ) {
+        throw new Error('Mensaje inválido');
+      }
+
+      console.log("Pasó validaciones")
+
+      // Ahora se procesa la lógica de negocio con la data de la orden
+      await feedAndUserFeedService.newOrderHandler(orderData);
+    
+      
+    } catch (error) {
+      console.error('Error processing the order:', error);
     }
   }
 

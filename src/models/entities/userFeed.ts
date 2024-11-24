@@ -3,11 +3,11 @@ import { Document } from 'mongoose';
 export interface UserFeedDocument extends UserFeed, Document {}
 
 export interface UserFeed {
-  feed_id: number;
-  article_id: number;
-  creation_user: number;
-  stars: number;
-  review: string;
+  feed_id: string;
+  article_id: string;
+  creation_user: string;
+  stars: number | null;
+  review: string | null;
   creation_date: Date;
-  update_date: Date;  
+  update_date: Date | null;  
 }

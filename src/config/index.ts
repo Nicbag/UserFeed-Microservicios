@@ -17,5 +17,5 @@ export default {
   SECURITY_URL: process.env.SECURITY_URL || '',
   CURRENT_USER: process.env.CURRENT_USER || '',
   RABBIT_URL: process.env.RABBIT_URL || '',
-  QUEUE_STATS: process.env.QUEUE_STATS || '',
+  QUEUE_ORDERS: process.env.QUEUE_ORDERS || ''
 };

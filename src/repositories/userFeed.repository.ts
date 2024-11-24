@@ -13,12 +13,12 @@ class FeedRepository {
   }
   
 
-  async getUserFeedByUserIdPending(user_id: string) {
-    
-    return ModelUserFeed.find({
+  async getUserFeedByUserIdPending(user_id: string):Promise<UserFeedDocument[]> {
+    const userFeeds = await ModelUserFeed.find({
       creation_user: user_id,
       stars: { $eq: null }
     });
+    return userFeeds || []
   }
 
   async create(payload: UserFeed) {
@@ -30,6 +30,13 @@ class FeedRepository {
       creation_user: user_id,
       article_id: article_id,
       stars: { $eq: null }
+    });
+  }
+
+  async getUserFeedByArticleIdAndUserId(user_id:string,article_id:string): Promise<UserFeedDocument|null>{
+    return ModelUserFeed.findOne({
+      creation_user: user_id,
+      article_id: article_id
     });
   }
 
