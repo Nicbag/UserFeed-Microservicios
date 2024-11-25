@@ -201,7 +201,7 @@ Authorization: Bearer token
 3. **Creación de `Feed` Inicial (si es necesario)**
    - Si es la primera compra del artículo, el `feedService` crea un registro inicial `Feed` para ese artículo.
 
-4. **Cálculo de Totales en `feedService`**
+4. **Cálculo de Totales en `FeedAndUserFeedService`**
    - El `feedService` calcula los totales relacionados al artículo:
      - `totalStars`: La puntuación acumulada de todos los userFeed sobre el artículo.
      - `reviewQuantity`: La cantidad total de registros `userFeed` asociados al artículo, que representan la cantidad de reseñas REALIZADAS.
