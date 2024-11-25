@@ -33,7 +33,7 @@
 - Camino normal:
     - Al consultar el feed de un articulo en particular se obtienen los totales de puntuación(totalStars) y cantidad de user_feed comentados(reviewQuantity)
 - Caminos alternativos:
-    - Si el artúclo no existe largar excepción controlada
+    - Si el artúclo no existe largar excepción controlada.
 
 #### CU: Crear userFeed (rabbit)
 - Precondición: Que se compre un artículo y se genere una orden
@@ -46,7 +46,7 @@
 #### CU: Consultar userFeed pendientes de un usuario
 - Precondición: Que el usuario no haya reseñado algún articulo comprado
 - Camino normal:
-    - Al consultar se obtienen todos los userFeed sin reseñar según el id del usuario logeado
+    - Al consultar se obtienen todos los userFeed sin reseñar según el id del usuario logeado.
 
 ### *Modelo de datos*
 
@@ -75,7 +75,6 @@ updateDate
 
 **Consulta de feed de un artículo**
 `GET /v1/feedService/feed/{articleId}` 
-
 
 *Headers*
 Authorization: Bearer token
@@ -201,7 +200,7 @@ Authorization: Bearer token
 3. **Creación de `Feed` Inicial (si es necesario)**
    - Si es la primera compra del artículo, el `feedService` crea un registro inicial `Feed` para ese artículo.
 
-4. **Cálculo de Totales en `feedService`**
+4. **Cálculo de Totales en `feedAndUserFeedService`**
    - El `feedService` calcula los totales relacionados al artículo:
      - `totalStars`: La puntuación acumulada de todos los userFeed sobre el artículo.
      - `reviewQuantity`: La cantidad total de registros `userFeed` asociados al artículo, que representan la cantidad de reseñas REALIZADAS.
