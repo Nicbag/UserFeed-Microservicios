@@ -4,6 +4,7 @@ import userFeedRepository from '@repositories/userFeed.repository';
 import { UpdateUserFeed } from '@dtos/feed.dto';
 import calculoTotalesService from './feedAndUserFeed.service';
 import { Rabbit } from 'src/rabbitmq/rabbit.server';
+import { now } from 'mongoose';
 
 class UserFeedService {
 
@@ -30,6 +31,9 @@ class UserFeedService {
     if(userFeedReseñado.star > 5 || userFeedReseñado.star<1){
       throw new CustomError('La puntuación debe ser entre 1 y 5', 400);
     }
+    if(!Number.isInteger(userFeedReseñado.star)){
+      throw new CustomError('La puntuación debe ser un número entero', 400);
+    }
     //Buscamos el userFeed del usuario logueado para el artículo seleccionado
     const userFeed: UserFeedDocument | null =  await userFeedRepository.getUserFeedByUserIdAndArticleIdPending(user_id,article_id);
     if (!userFeed || Object.keys(userFeed).length === 0) {
@@ -42,14 +46,15 @@ class UserFeedService {
     if (userFeedReseñado.review !== undefined) {
       userFeed.review = userFeedReseñado.review;
     }
-
+    userFeed.update_date= now();
     // Guardar los cambios en la base de datos
     const updatedUserFeed = await userFeed.save();
 
     calculoTotalesService.calculateTotalsFeed(article_id);
+    
 
     // Retornar el objeto actualizado
-    return { ...updatedUserFeed };
+    return { ...updatedUserFeed._doc };
   }
 
 }

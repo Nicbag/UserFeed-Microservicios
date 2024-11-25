@@ -30,7 +30,8 @@ class FeedAndUserFeedService {
         feed.review_quantity = reviewQuantity;
         feed.update_date= now();
 
-        feed.save
+        feed.save();
+        console.log("Se calcularon totales")
 
     }
 
