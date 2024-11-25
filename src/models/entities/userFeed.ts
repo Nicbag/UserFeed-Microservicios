@@ -1,6 +1,8 @@
 import { Document } from 'mongoose';
 
-export interface UserFeedDocument extends UserFeed, Document {}
+export interface UserFeedDocument extends UserFeed, Document {
+  _doc: UserFeed;
+}
 
 export interface UserFeed {
   feed_id: string;
