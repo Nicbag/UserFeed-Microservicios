@@ -188,19 +188,6 @@ Authorization: Bearer token
 	"referenceId": 43759834
 }
 ```
-*response*
--Responde con el resultado de las creaciones en feed en fanout `userFeed-create`
-```json
-{
-    "id": 91218,
-    "feedId":23432,
-    "articleId": 91218,
-    "creationUser":912,
-    "stars": null,
-    "review":null,
-    "creationDate": 165947859374
-}
-```
 
 #### Flujo de Trabajo para Creaciones de userFeed y/o Feed
 
